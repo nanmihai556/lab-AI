@@ -1,4 +1,4 @@
-from Laborator1NanMihai.functions.tabu_search import tabu_search
+from functions.tabu_search import tabu_search
 from functions.generateRandomSolutions import generateRandomSolutions
 from functions.randomHillClimbing import randomHillClimbing
 
@@ -141,6 +141,7 @@ def start():
         print('1. Read from file:')
         print('2. Read from local data')
         x = input()
+        tabu_size = 5
         if x == '1':
             file = input('Choose file: \n 1. rucsac-20.txt \n 2. rucsac-200.txt \n')
             name_of_file = ''
@@ -171,18 +172,18 @@ def start():
                     pass
                 file_backpack_capacity = int(line)
                 average = 0
-
-                best_solution, best_solution_value = tabu_search(weights, values, file_backpack_capacity, 100, 5,
-                                                                 number_of_solutions)
+                best_solution, best_solution_value = tabu_search(file_weights, file_values, file_backpack_capacity, 100,
+                                                                 tabu_size, number_of_solutions)
+                average += best_solution_value
                 print("Best solution:", best_solution)
                 print("Best solution value:", best_solution_value)
-                if(best_solution_value > best_of_all):
+                if best_solution_value > best_of_all:
                     best_of_all = best_solution_value
-                average = average / 10
+                average = average / number_of_solutions
                 average_of_all += average
                 f.close()
             print("Best of all: " + str(best_of_all))
-            print("Average of all: " + str(average_of_all / number_of_solutions))
+            print("Average of all: " + str(average_of_all))
         elif x == '2':
             number_of_solutions = int(input('Enter number of solutions to be generated: \n'))
             best_of_all = 0
@@ -190,17 +191,18 @@ def start():
             # simulare 10 rulari
             for l in range(0, 9):
                 average = 0
-                best_solution, best_solution_value = tabu_search(weights, values, backpackCapacity, 100, 5,
+                best_solution, best_solution_value = tabu_search(weights, values, backpackCapacity, 100, tabu_size,
                                                                  number_of_solutions)
+                average += best_solution_value
                 print("Best solution:", best_solution)
                 print("Best solution value:", best_solution_value)
 
-                average = average / 10
+                average = average / number_of_solutions
                 average_of_all += average
-                if (best_solution_value > best_of_all):
+                if best_solution_value > best_of_all:
                     best_of_all = best_solution_value
             print("Best of all: " + str(best_of_all))
-            print("Average of all: " + str(average_of_all / number_of_solutions))
+            print("Average of all: " + str(average_of_all))
 
 
 start()
