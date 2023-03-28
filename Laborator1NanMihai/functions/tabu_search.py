@@ -8,19 +8,14 @@ def tabu_search(weights, values, capacity, max_iter, tabu_size, num_solutions):
         current_solution = [random.randint(0, 1) for _ in range(n)]
         best_solution = current_solution
         best_solution_value = 0
-        tabu_list = [set() for _ in range(n)]
-
+        tabu_list = [[] for _ in range(n)]
         for i in range(max_iter):
-            # Generate a list of neighboring solutions
+            # Generate a list of neighboring solutions through the 2-swap method
             neighbors = []
             for j in range(n):
-                if current_solution[j] == 0 and j not in tabu_list[j]:
+                for k in range(j + 1, n):
                     neighbor = current_solution.copy()
-                    neighbor[j] = 1
-                    neighbors.append(neighbor)
-                elif current_solution[j] == 1:
-                    neighbor = current_solution.copy()
-                    neighbor[j] = 0
+                    neighbor[j], neighbor[k] = neighbor[k], neighbor[j]
                     neighbors.append(neighbor)
 
             # Evaluate the quality of each neighboring solution
@@ -28,15 +23,16 @@ def tabu_search(weights, values, capacity, max_iter, tabu_size, num_solutions):
                                range(len(neighbors))]
             neighbor_weights = [sum([weights[j] for j in range(n) if neighbors[k][j] == 1]) for k in
                                 range(len(neighbors))]
-
             # Choose the best neighbor that does not violate the tabu rules
             # -infinity
             best_neighbor_value = -float('inf')
             best_neighbor_index = None
-            for k in range(len(neighbors)):
-                if neighbor_weights[k] <= capacity and neighbor_values[k] > best_neighbor_value and k not in tabu_list:
-                    best_neighbor_value = neighbor_values[k]
-                    best_neighbor_index = k
+            for index, neighbor in enumerate(neighbors):
+                if neighbor_weights[index] <= capacity and \
+                        neighbor_values[index] > best_neighbor_value\
+                        and neighbor not in tabu_list:
+                    best_neighbor_value = neighbor_values[index]
+                    best_neighbor_index = index
 
             if best_neighbor_index is not None:
                 # Move to the best neighbor
@@ -46,8 +42,9 @@ def tabu_search(weights, values, capacity, max_iter, tabu_size, num_solutions):
                     best_solution_value = neighbor_values[best_neighbor_index]
 
                 # Update the tabu list
-                tabu_list.pop(0)
-                tabu_list.append(set([j for j in range(n) if neighbors[best_neighbor_index][j] != current_solution[j]]))
+                tabu_list.append(current_solution)
+                if len(tabu_list) > tabu_size:
+                    tabu_list.pop(0)
 
             else:
                 # All neighbors violate the tabu rules, so choose a random one
