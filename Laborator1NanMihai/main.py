@@ -1,3 +1,4 @@
+from Lab3.functions.evolutionary_algorithm import evolutionary_algorithm
 from functions.tabu_search import tabu_search
 from functions.generateRandomSolutions import generateRandomSolutions
 from functions.randomHillClimbing import randomHillClimbing
@@ -12,6 +13,7 @@ def start():
     print('a.Knapsack problem')
     print('b.Knapsack problem - Random hill climbing')
     print('c.Knapsack problem - Tabu Search')
+    print('d.Knapsack problem - Algoritm Evolutiv')
     type = input()
     if type == 'a':
         print('1. Read from file:')
@@ -201,6 +203,72 @@ def start():
                 average_of_all += average
                 if best_solution_value > best_of_all:
                     best_of_all = best_solution_value
+            print("Best of all: " + str(best_of_all))
+            print("Average of all: " + str(average_of_all))
+    elif type == 'd':
+        print('1. Read from file:')
+        print('2. Read from local data')
+        x = input()
+        if x == '1':
+            file = input('Choose file: \n 1. rucsac-20.txt \n 2. rucsac-200.txt \n')
+            name_of_file = ''
+            if file == '1':
+                name_of_file = 'rucsac-20.txt'
+            else:
+                name_of_file = 'rucsac-200.txt'
+
+            number_of_generations = int(input('Enter number of generations to be generated: \n'))
+            best_of_all = 0  # get from file
+            average_of_all = 0
+            for l in range(0, 9):
+                f = open(name_of_file)
+                # Read first line of .txt file -> number of objects
+                file_number_of_objects = [int(x) for x in next(f).split()][0]
+                file_weights = []
+                file_values = []
+
+                # Read weights and values from file
+                for line in f:
+                    object = [int(x) for x in line.split()]
+                    if len(object) < 3:
+                        break
+                    file_weights.append(object[1])
+                    file_values.append(object[2])
+                # Read last line of file -> backpack capacity
+                for line in f:
+                    pass
+                file_backpack_capacity = int(line)
+                average = 0
+                best_solution, best_solution_value = evolutionary_algorithm(
+                    file_weights, file_values, file_backpack_capacity, population_size=100,
+                    generations=number_of_generations, crossover_rate=0.7, mutation_rate=0.01)
+                average += best_solution_value
+                print("Best solution:", best_solution)
+                print("Best solution value:", best_solution_value)
+                if best_solution_value > best_of_all:
+                    best_of_all = best_solution_value
+                average = average / number_of_solutions
+                average_of_all += average
+                f.close()
+            print("Best of all: " + str(best_of_all))
+            print("Average of all: " + str(average_of_all))
+        elif x == '2':
+            number_of_solutions = int(input('Enter number of solutions to be generated: \n'))
+            best_of_all = 0
+            average_of_all = 0
+            # simulare 10 rulari
+            for l in range(0, 9):
+                average = 0
+                # best_solution, best_solution_value = tabu_search(weights, values, backpackCapacity, 100, tabu_size,
+                #                                                  number_of_solutions)
+                # average += best_solution_value
+                # print("Best solution:", best_solution)
+                # print("Best solution value:", best_solution_value)
+                #
+                # average = average / number_of_solutions
+                # average_of_all += average
+                # if best_solution_value > best_of_all:
+                #     best_of_all = best_solution_value
             print("Best of all: " + str(best_of_all))
             print("Average of all: " + str(average_of_all))
 
