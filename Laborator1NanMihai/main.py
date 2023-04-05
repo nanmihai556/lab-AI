@@ -3,6 +3,9 @@ from functions.tabu_search import tabu_search
 from functions.generateRandomSolutions import generateRandomSolutions
 from functions.randomHillClimbing import randomHillClimbing
 
+
+
+
 weights = [6, 3, 2, 4, 5, 8, 9, 2, 1, 3, 5, 3, 7, 8]
 values = [2, 2, 5, 9, 2, 2, 5, 9, 2, 2, 5, 9, 2, 1]
 numberOfObjects = 14
@@ -217,7 +220,10 @@ def start():
             else:
                 name_of_file = 'rucsac-200.txt'
 
+            population_size = int(input('Enter the population size: \n'))  # basic -> 100
             number_of_generations = int(input('Enter number of generations to be generated: \n'))
+            crossover_rate = float(input('Enter crossover rate: \n'))  # de obicei intre 0.6 si 0.9
+            mutation_rate = float(input('Enter mutation rate: \n'))  # incepem cu 0.01 si crestem gradual
             best_of_all = 0  # get from file
             average_of_all = 0
             for l in range(0, 9):
@@ -240,35 +246,40 @@ def start():
                 file_backpack_capacity = int(line)
                 average = 0
                 best_solution, best_solution_value = evolutionary_algorithm(
-                    file_weights, file_values, file_backpack_capacity, population_size=100,
-                    generations=number_of_generations, crossover_rate=0.7, mutation_rate=0.01)
+                    file_weights, file_values, file_backpack_capacity, population_size=population_size,
+                    generations=number_of_generations, crossover_rate=crossover_rate, mutation_rate=mutation_rate)
                 average += best_solution_value
                 print("Best solution:", best_solution)
                 print("Best solution value:", best_solution_value)
                 if best_solution_value > best_of_all:
                     best_of_all = best_solution_value
-                average = average / number_of_solutions
+                average = average / 10
                 average_of_all += average
                 f.close()
             print("Best of all: " + str(best_of_all))
             print("Average of all: " + str(average_of_all))
         elif x == '2':
-            number_of_solutions = int(input('Enter number of solutions to be generated: \n'))
+            population_size = int(input('Enter the population size: \n'))  # basic -> 100
+            number_of_generations = int(input('Enter number of generations to be generated: \n'))
+            crossover_rate = float(input('Enter crossover rate: \n'))  # de obicei intre 0.6 si 0.9
+            mutation_rate = float(input('Enter mutation rate: \n'))  # incepem cu 0.01 si crestem gradual
             best_of_all = 0
             average_of_all = 0
             # simulare 10 rulari
             for l in range(0, 9):
                 average = 0
-                # best_solution, best_solution_value = tabu_search(weights, values, backpackCapacity, 100, tabu_size,
-                #                                                  number_of_solutions)
-                # average += best_solution_value
-                # print("Best solution:", best_solution)
-                # print("Best solution value:", best_solution_value)
-                #
-                # average = average / number_of_solutions
-                # average_of_all += average
-                # if best_solution_value > best_of_all:
-                #     best_of_all = best_solution_value
+                best_solution, best_solution_value = evolutionary_algorithm(
+                    weights, values, backpackCapacity, population_size=population_size,
+                    generations=number_of_generations, crossover_rate=crossover_rate, mutation_rate=mutation_rate)
+
+                average += best_solution_value
+                print("Best solution:", best_solution)
+                print("Best solution value:", best_solution_value)
+
+                average = average / 10
+                average_of_all += average
+                if best_solution_value > best_of_all:
+                    best_of_all = best_solution_value
             print("Best of all: " + str(best_of_all))
             print("Average of all: " + str(average_of_all))
 
