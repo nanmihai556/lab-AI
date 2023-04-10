@@ -256,8 +256,7 @@ def start():
                 average = average / 10
                 average_of_all += average
                 f.close()
-            print("Best of all: " + str(best_of_all))
-            print("Average of all: " + str(average_of_all))
+
         elif x == '2':
             population_size = int(input('Enter the population size: \n'))  # basic -> 100
             number_of_generations = int(input('Enter number of generations to be generated: \n'))

@@ -29,17 +29,9 @@ def evolutionary_algorithm_tsp(coords, population_size, generations, crossover_r
             population += [child1, child2]
 
         # Elitism: selection of the best solutions for the next generation
-        # fitness_df = pd.DataFrame({'solution': population, 'fitness': fitnesses})
-        # fitness_df = fitness_df.sort_values(by=['fitness'], ascending=False)
-        # population = list(fitness_df['solution'].values)[:population_size]
-
-        # Elitism: selection of the best solutions for the next generation
         # selectie proportionala cu fitness-ul
         population = [population[i] for i in
                       sorted(range(len(fitnesses)), key=lambda k: fitnesses[k], reverse=True)[:population_size]]
-
-        # Display of the best solution of the current generation
-        # print("Generation ", generation, ": ", max(fitnesses))
 
     # Return of the best solution found
     best_solution = population[fitnesses.index(max(fitnesses))]
