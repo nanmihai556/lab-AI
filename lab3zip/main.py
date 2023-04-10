@@ -27,7 +27,7 @@ for l in range(0, 9):
     print("Best solution found: ", best_solution)
     print("Best solution distance: ", 1 / best_solution_value)
     best_solutions_array.append(1 / best_solution_value)
-    average_solutions_array.append(1 / average)
+    average_solutions_array.append(average)
 
 best_solutions_array = np.array(best_solutions_array)
 average_solutions_array = np.array(average_solutions_array)
