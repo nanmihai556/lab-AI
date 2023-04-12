@@ -26,10 +26,12 @@ for l in range(0, 9):
     average_of_all += average
     print("Best solution found: ", best_solution)
     print("Best solution distance: ", 1 / best_solution_value)
+    print("Average: ", average)
     best_solutions_array.append(1 / best_solution_value)
-    average_solutions_array.append(1 / average)
+
 
 best_solutions_array = np.array(best_solutions_array)
+average_solutions_array.append([average_of_all])
 average_solutions_array = np.array(average_solutions_array)
 
 print("Best of all: " + str(best_of_all))
@@ -40,9 +42,6 @@ fig, ax = plt.subplots()
 
 # Plot the best solutions as a blue line
 ax.plot(best_solutions_array, color='blue', label='Best')
-
-# Plot the average solutions as a red line
-ax.plot(average_solutions_array, color='red', label='Average')
 
 # Add a title and axis labels
 ax.set_title('Evolutionary TSP Algorithm Performance')

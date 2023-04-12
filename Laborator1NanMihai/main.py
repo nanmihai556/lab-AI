@@ -230,7 +230,6 @@ def start():
             best_of_all = 0  # get from file
             average_of_all = 0
             best_solutions_array = []
-            average_solutions_array = []
             for l in range(0, 9):
                 f = open(name_of_file)
                 # Read first line of .txt file -> number of objects
@@ -257,29 +256,23 @@ def start():
                 print("Best solution:", best_solution)
                 print("Best solution value:", best_solution_value)
                 best_solutions_array.append(best_solution_value)
-                average_solutions_array.append(average)
                 if best_solution_value > best_of_all:
                     best_of_all = best_solution_value
                 average = average / 10
                 average_of_all += average
                 best_solutions_array.append(1 / best_solution_value)
-                average_solutions_array.append(average)
                 f.close()
             print("Best of all: " + str(best_of_all))
             print("Average of all: " + str(average_of_all))
             best_solutions_array = np.array(best_solutions_array)
-            average_solutions_array = np.array(average_solutions_array)
             # Create a new figure and axis
             fig, ax = plt.subplots()
 
             # Plot the best solutions as a blue line
             ax.plot(best_solutions_array, color='blue', label='Best')
 
-            # Plot the average solutions as a red line
-            ax.plot(average_solutions_array, color='red', label='Average')
-
             # Add a title and axis labels
-            ax.set_title('Evolutionary TSP Algorithm Performance')
+            ax.set_title('Knapsack AE Algorithm Performance')
             ax.set_xlabel('Generation')
             ax.set_ylabel('Solution Quality')
 
@@ -298,7 +291,6 @@ def start():
             average_of_all = 0
             # simulare 10 rulari
             best_solutions_array = []
-            average_solutions_array = []
             for l in range(0, 9):
                 average = 0
                 best_solution, best_solution_value = evolutionary_algorithm(
@@ -309,7 +301,6 @@ def start():
                 print("Best solution:", best_solution)
                 print("Best solution value:", best_solution_value)
                 best_solutions_array.append(best_solution_value)
-                average_solutions_array.append(average)
                 average = average / 10
                 average_of_all += average
                 if best_solution_value > best_of_all:
@@ -317,16 +308,12 @@ def start():
             print("Best of all: " + str(best_of_all))
             print("Average of all: " + str(average_of_all))
             best_solutions_array = np.array(best_solutions_array)
-            average_solutions_array = np.array(average_solutions_array)
 
             # Create a new figure and axis
             fig, ax = plt.subplots()
 
             # Plot the best solutions as a blue line
             ax.plot(best_solutions_array, color='blue', label='Best')
-
-            # Plot the average solutions as a red line
-            ax.plot(average_solutions_array, color='red', label='Average')
 
             # Add a title and axis labels
             ax.set_title('Knapsack AE Algorithm Performance')
