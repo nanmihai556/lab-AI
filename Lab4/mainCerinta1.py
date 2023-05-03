@@ -14,9 +14,10 @@ num_parents = int(input('Enter number of parents: \n'))
 best_of_all = 999999999
 average_of_all = 0
 for l in range(0, 9):
-    best, average = genetic_algorithm(pop_size=population_size, num_generations=number_of_generations, crossover_prob=crossover_rate,
-                      mutation_prob=mutation_rate, num_parents=10)
-    if(best < best_of_all):
+    best, average = genetic_algorithm(pop_size=population_size, num_generations=number_of_generations,
+                                      crossover_prob=crossover_rate,
+                                      mutation_prob=mutation_rate, num_parents=10)
+    if best < best_of_all:
         best_of_all = best
     average_of_all += average
 
