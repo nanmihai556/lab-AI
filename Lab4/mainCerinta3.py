@@ -33,18 +33,19 @@
 #
 # ACO has been successfully applied to a wide range of combinatorial optimization problems, including the Traveling
 # Salesman Problem, the Vehicle Routing Problem, and the Job Shop Scheduling Problem.
+
 from Lab4.cerinta3Functions.ant_system import ant_system
 
 
-# number_of_ants = int(input('Enter number of ants: \n'))
-# number_of_iterations = int(input('Enter number of iterations: \n'))
-# alpha = float(input('Enter alpha: \n'))
-# beta = float(input('Enter beta: \n'))
-# evaporation_rate = float(input('Enter evaporation rate: \n'))
+number_of_ants = int(input('Enter number of ants: \n'))
+number_of_iterations = int(input('Enter number of iterations: \n'))
+alpha = float(input('Enter alpha: \n'))
+beta = float(input('Enter beta: \n'))
+evaporation_rate = float(input('Enter evaporation rate: \n'))
 
+# num_ants=10, num_iterations=100, alpha=1, beta=5, evaporation_rate=0.5
+best_tour, best_tour_length = ant_system(num_ants=number_of_ants, num_iterations=number_of_iterations,
+                                         alpha=alpha, beta=beta, evaporation_rate=evaporation_rate)
 
-best_tour, best_tour_length = ant_system(num_ants=10, num_iterations=100, alpha=1, beta=5, evaporation_rate=0.5)
-# num_ants=number_of_ants, num_iterations=number_of_iterations,
-#                                          alpha=alpha, beta=beta, evaporation_rate=evaporation_rate
-print("Best tour:", best_tour)
+print("Best tour: \n", best_tour)
 print("Best tour length:", best_tour_length)

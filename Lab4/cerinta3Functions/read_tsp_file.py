@@ -1,23 +1,16 @@
 import numpy as np
+from Lab2TabuSearch.read_data import read_data
 
 
 def read_tsp_file(file_path):
-    with open(file_path, 'r') as f:
-        lines = f.readlines()
+    data = read_data(file_path)
+    n = len(data)
 
-    city_coords = []
-    for line in lines:
-        if line.startswith("EOF"):
-            break
-        city_id, x, y = line.strip().split()
-        city_coords.append([float(x), float(y)])
-
-    num_cities = len(city_coords)
-    dist_matrix = np.zeros((num_cities, num_cities))
-    for i in range(num_cities):
-        for j in range(num_cities):
-            if i == j:
-                continue
-            dist_matrix[i, j] = np.linalg.norm(np.array(city_coords[i]) - np.array(city_coords[j]))
+    dist_matrix = np.zeros((n, n))
+    for i in range(n):
+        for j in range(i + 1, n):
+            dist = np.linalg.norm(np.array(data[i]) - np.array(data[j]))
+            dist_matrix[i, j] = dist
+            dist_matrix[j, i] = dist
 
     return dist_matrix

@@ -5,6 +5,16 @@ import numpy as np
 from Lab4.cerinta3Functions.read_tsp_file import read_tsp_file
 
 
+# alpha: Alpha is a parameter that controls the influence of the pheromone level on the ant's decision-making
+# process. A higher value of alpha increases the importance of the pheromone level.
+#
+# beta: Beta is a parameter that controls the influence of the distance between cities on the ant's decision-making
+# process. A higher value of beta increases the importance of the distance.
+#
+# evaporation_rate: This parameter determines the rate at which the pheromone evaporates or decays over time. It is a
+# value between 0 and 1, where 0 means no evaporation (pheromone persists) and 1 means complete evaporation (no
+# pheromone remains).
+
 def ant_system(num_ants, num_iterations, alpha, beta, evaporation_rate):
     dist_matrix = read_tsp_file("pr124.tsp")
 
